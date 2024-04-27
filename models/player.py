@@ -10,13 +10,14 @@ class Player:
     def add_points(self):
         self.points += 1
 
-    def player_information(self):
+    def show_player_info(self):
         return {
             "last_name": self.last_name,
             "first_name": self.first_name,
             "date_of_birth": self.date_of_birth,
             "chess_id": self.chess_id,
             "sex": self.sex,
+            "points": self.points
         }
 
     def update_information(self, **kwargs):
@@ -25,10 +26,9 @@ class Player:
                 setattr(self, key, value)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} ({self.chess_id})"
+        return f"{self.show_player_info()}"
 
 
 if __name__ == "__main__":
     aylan = Player("Aylan", "BELLIL", "30/07/2023", "AB98762", "M")
     print(aylan)
-
