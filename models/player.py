@@ -7,26 +7,26 @@ class Player:
         self.sex = sex
         self.points = 0
 
-    def add_points(self):
-        self.points += 1
+    def add_point(self, score):
+        self.points += score
 
-    def show_player_info(self):
+    def get_player_info(self):
         return {
-            "last_name": self.last_name,
             "first_name": self.first_name,
+            "last_name": self.last_name,
             "date_of_birth": self.date_of_birth,
             "chess_id": self.chess_id,
             "sex": self.sex,
             "points": self.points
         }
 
-    def update_information(self, **kwargs):
+    def update_player_info(self, **kwargs):
         for key, value in kwargs.items():
             if hasattr(self, key):
                 setattr(self, key, value)
 
     def __str__(self):
-        return f"{self.show_player_info()}"
+        return f"{self.get_player_info()}"
 
 
 if __name__ == "__main__":
