@@ -1,3 +1,7 @@
+from pathlib import Path
+import json
+
+
 class Tournament:
     def __init__(self):
         self.name = None
@@ -9,6 +13,7 @@ class Tournament:
         self.current_round = 1
         self.rounds = [[] for _ in range(self.number_rounds)]
         self.registered_players = []
+        self.save_folder = Path.cwd().parent / "data" / "tournament"
 
     def set_name(self, name):
         self.name = name
@@ -27,17 +32,17 @@ class Tournament:
         self.description = description
 
     def register_player(self, player):
-        self.registered_players.append(player.get_player())
+        self.registered_players.append(player)
 
     def add_round(self, round):
-        self.rounds[self.current_round - 1].append(round.matches)
+        self.rounds[self.current_round - 1].append(round)
 
     def start_next_round(self):
         if self.current_round < self.number_rounds:
             self.current_round += 1
             self.rounds[self.current_round - 1] = []
 
-    def get_tournament_info(self):
+    def get_tournament(self):
         return {
             "name": self.name,
             "location": self.location,
@@ -48,11 +53,34 @@ class Tournament:
             "description": self.description
         }
 
-    def __str__(self):
-        return f"{self.get_tournament_info()})"
+    def save_tournament(self):
+        self.save_folder.mkdir(parents=True, exist_ok=True)
+        save_file = self.save_folder / "tournament.json"
+
+        # Load the existing player list if there is one
+        if save_file.exists():
+            with open(save_file, "r") as file:
+                tournament_list = json.load(file)
+        else:
+            tournament_list = []
+
+        new_tournament = self.get_tournament()
+        exiting_tournament = any(new_tournament["name"] == player["name"] for player in tournament_list)
+
+        # Add new player
+        if not exiting_tournament:
+            tournament_list.append(new_tournament)
+
+            # Save updated player list
+            with open(save_file, "w") as file:
+                json.dump(tournament_list, file,  ensure_ascii=False, indent=2)
+        else:
+            print(f"The tournament '{new_tournament['name']}' already existed in the database")
 
 
 if __name__ == "__main__":
-    #tournament = Tournament("Tournoi d'échecs", "Paris", "30/09/2024", "15/10/2024", number_of_rounds=4)
-    #print(tournament.registered_players)
-    pass
+    tournament = Tournament()
+    tournament.set_name("Tournoi d'échecs")
+    tournament.set_location("Paris")
+    tournament.set_date("30/09/2024", "15/10/2024")
+    tournament.save_tournament()
