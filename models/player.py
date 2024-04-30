@@ -10,7 +10,7 @@ class Player:
         self.sex = None
         self.chess_id = None
         self.points = 0
-        self.save_folder = Path.cwd().parent / "data" / "tournament"
+        self.save_folder = Path.cwd() / "data" / "tournament"
 
     def set_name(self, first_name, last_name):
         self.first_name = first_name
@@ -41,11 +41,6 @@ class Player:
             "points": self.points
         }
 
-    def update_player(self, **kwargs):
-        for key, value in kwargs.items():
-            if hasattr(self, key):
-                setattr(self, key, value)
-
     def save_player(self):
         self.save_folder.mkdir(parents=True, exist_ok=True)
         save_file = self.save_folder / "players.json"
@@ -57,6 +52,9 @@ class Player:
         else:
             players_list = []
 
+        new_player = self.get_player()
+
+        # Check if player exists in JSON database
         new_player = self.get_player()
         registered_player = any(new_player["chess_id"] == player["chess_id"] for player in players_list)
 
@@ -70,12 +68,37 @@ class Player:
         else:
             print(f"The player {new_player} already existed in the database")
 
+    def update_player(self, **kwargs):
+        # Load existing JSON database
+        save_file = self.save_folder / "players.json"
+        if not save_file.exists():
+            return f"No players in the database to update"
+        with open(save_file, "r") as file:
+            players_list = json.load(file)
+
+        # update player
+        for key, value in kwargs.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
+
+        # Find player in JSON database
+        for player in players_list:
+            if player["chess_id"] == self.chess_id:
+                player.update(self.get_player())
+                break
+
+        # Save updated JSON database
+        with open(save_file, "w") as file:
+            json.dump(players_list, file, indent=2)
+
 
 if __name__ == "__main__":
     aylan = Player()
-    aylan.set_name("Aylan", "BELLIL")
-    aylan.set_date_of_birth( "30/07/2023")
-    aylan.set_sex("M")
-    aylan.set_chess_id("AB98762")
+    aylan.set_chess_id("TR76827")
+    mouloud = Player()
+    mouloud.set_chess_id("HG76007")
     aylan.save_player()
+    mouloud.save_player()
+    mouloud.update_player(sex="Male")
+
 
