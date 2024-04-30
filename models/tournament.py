@@ -13,7 +13,7 @@ class Tournament:
         self.current_round = 1
         self.rounds = [[] for _ in range(self.number_rounds)]
         self.registered_players = []
-        self.save_folder = Path.cwd().parent / "data" / "tournament"
+        self.save_folder = Path.cwd() / "data" / "tournament"
 
     def set_name(self, name):
         self.name = name
@@ -65,17 +65,42 @@ class Tournament:
             tournament_list = []
 
         new_tournament = self.get_tournament()
-        exiting_tournament = any(new_tournament["name"] == player["name"] for player in tournament_list)
+
+        # Check if player exists in JSON database
+        existing_tournament = any(new_tournament["name"] == player["name"] for player in tournament_list)
 
         # Add new player
-        if not exiting_tournament:
+        if not existing_tournament:
             tournament_list.append(new_tournament)
 
             # Save updated player list
             with open(save_file, "w") as file:
-                json.dump(tournament_list, file,  ensure_ascii=False, indent=2)
+                json.dump(tournament_list, file, ensure_ascii=False, indent=2)
         else:
             print(f"The tournament '{new_tournament['name']}' already existed in the database")
+
+    def update_tournament(self, **kwargs):
+        # Load existing JSON database
+        save_file = self.save_folder / "tournament.json"
+        if not save_file.exists():
+            return f"No tournaments in the database to update"
+        with open(save_file, "r") as file:
+            tournament_list = json.load(file)
+
+        # update tournament
+        for key, value in kwargs.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
+
+        # Find tournament in JSON database
+        for tournament in tournament_list:
+            if tournament["name"] == self.name:
+                tournament.update(self.get_tournament())
+                break
+
+        # Save updated JSON database
+        with open(save_file, "w") as file:
+            json.dump(tournament_list, file, indent=2)
 
 
 if __name__ == "__main__":
@@ -84,3 +109,4 @@ if __name__ == "__main__":
     tournament.set_location("Paris")
     tournament.set_date("30/09/2024", "15/10/2024")
     tournament.save_tournament()
+    tournament.update_tournament(location="Paris 2024")
