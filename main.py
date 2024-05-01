@@ -1,61 +1,70 @@
-from pprint import pprint
-
 from models.player import Player
 from models.tournament import Tournament
 from models.round import Round
 from models.match import Match
 
 # Inscription des joueurs au club
-player1 = Player("Mouloud", "ZOO", "04/08/1992", "JD12345", "M")
-player2 = Player("Johnson", "Bob", "02/02/1960", "JD67890", "M")
-player3 = Player("Victor", "BIZIEN", "16/05/1993", "MB87641", "M")
-player4 = Player("Aylan", "BELLIL", "30/07/2023", "AB77800", "M")
+player1 = Player()
+player1.set_name("Aylan", "BELLIL")
+player1.set_chess_id("RE26528")
+player1.save_player()
+player2 = Player()
+player2.set_name("Victor", "BIZIEN")
+player2.set_chess_id("IU87651")
+player2.save_player()
+player3 = Player()
+player3.set_name("Jean", "ZOO")
+player3.set_chess_id("NH98760")
+player3.save_player()
+player4 = Player()
+player4.set_name("Nicolas", "CARAMEL")
+player4.set_chess_id("BG87650")
+player4.save_player()
+
+# Mettre à jour le joueur1
+player1.update_player(date_of_birth="30/07/2023")
 
 # Organisation d'un Tournoi à Ermont
-tournament = Tournament("Tournoi Ermont", "Centre ville", "27/04/2024", "30/04/2024", "Merci aux organisateurs")
+tournament = Tournament()
+tournament.set_name("Tournoi de Paris")
+tournament.save_tournament()
 
-# Enregistrement des joueurs au Tournoi d'Ermont
-tournament.register_player(player1)
-tournament.register_player(player2)
-tournament.register_player(player3)
-tournament.register_player(player4)
+#tournament.update_tournament(location="JO Paris")
 
-# Afficher les joueurs enregistrés dans le tournoi
-"""print("Liste des joueurs inscrits au tournoi:")
-for player in tournament.registered_players:
-    print(player)"""
+
+# Enregistrement des joueurs au Tournoi de Paris
+tournament.register_player(player1.get_player())
+tournament.register_player(player2.get_player())
+tournament.register_player(player3.get_player())
+tournament.register_player(player4.get_player())
+tournament.update_tournament()
 
 # Lancer le 1er round
-round = Round("Round 1")
-match1 = Match(player1, player3)
-match2 = Match(player2, player4)
-match1.award_match_points()
-match2.award_match_points()
-round.add_match(match1)
-round.add_match(match2)
+round1 = Round()
+round1.set_name("Round 1")
+match1 = Match()
+match1.set_players(player1, player4)
+match1.award_points()
+match2 = Match()
+match2.set_players(player3, player2)
+match2.award_points()
+round1.add_match(match1.get_score())
+round1.add_match(match2.get_score())
+tournament.add_round(round1.matches)
+tournament.update_tournament()
 
-#print(f"\n{round}")
-tournament.add_round(round)
-
-# Enregistrer les points des joueurs ...
 
 # Lancer le 2eme round
 tournament.start_next_round()
-round = Round("Round 2")
-match1 = Match(player1, player4)
-match2 = Match(player2, player3)
-match1.award_match_points()
-match2.award_match_points()
-round.add_match(match1)
-round.add_match(match2)
-print()
-tournament.add_round(round)
-pprint(tournament.get_tournament_info())
-
-
-
-print(player1.points)
-print(player2.points)
-print(player3.points)
-print(player4.points)
-
+round2 = Round()
+round2.set_name("Round 2")
+match1 = Match()
+match1.set_players(player1, player3)
+match1.award_points()
+match2 = Match()
+match2.set_players(player4, player2)
+match2.award_points()
+round2.add_match(match1.get_score())
+round2.add_match(match2.get_score())
+tournament.add_round(round2.matches)
+tournament.update_tournament()
