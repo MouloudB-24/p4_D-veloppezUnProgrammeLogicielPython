@@ -24,24 +24,25 @@ player4.save_player()
 # Mettre à jour le joueur1
 player1.update_player(date_of_birth="30/07/2023")
 
-# Organisation d'un Tournoi à Ermont
-tournament = Tournament()
-tournament.set_name("Tournoi de Paris")
-tournament.save_tournament()
+# Organisation d'un Tournoi à Paris
+tournament1 = Tournament()
+tournament1.set_name("Tournoi de Paris")
+tournament1.save_tournament()
 
 #tournament.update_tournament(location="JO Paris")
 
 
 # Enregistrement des joueurs au Tournoi de Paris
-tournament.register_player(player1.get_player())
-tournament.register_player(player2.get_player())
-tournament.register_player(player3.get_player())
-tournament.register_player(player4.get_player())
-tournament.update_tournament()
+tournament1.register_player(player1.get_player())
+tournament1.register_player(player2.get_player())
+tournament1.register_player(player3.get_player())
+tournament1.register_player(player4.get_player())
+tournament1.update_tournament()
 
 # Lancer le 1er round
 round1 = Round()
 round1.set_name("Round 1")
+round1.start_round()
 match1 = Match()
 match1.set_players(player1, player4)
 match1.award_points()
@@ -50,13 +51,15 @@ match2.set_players(player3, player2)
 match2.award_points()
 round1.add_match(match1.get_score())
 round1.add_match(match2.get_score())
-tournament.add_round(round1.matches)
-tournament.update_tournament()
+tournament1.add_round(round1.get_round())
+round1.finish_round()
+tournament1.update_tournament()
 
 
 # Lancer le 2eme round
-tournament.start_next_round()
+tournament1.start_next_round()
 round2 = Round()
+round2.start_round()
 round2.set_name("Round 2")
 match1 = Match()
 match1.set_players(player1, player3)
@@ -66,5 +69,9 @@ match2.set_players(player4, player2)
 match2.award_points()
 round2.add_match(match1.get_score())
 round2.add_match(match2.get_score())
-tournament.add_round(round2.matches)
-tournament.update_tournament()
+tournament1.add_round(round2.get_round())
+round2.finish_round()
+tournament1.update_tournament()
+
+
+
