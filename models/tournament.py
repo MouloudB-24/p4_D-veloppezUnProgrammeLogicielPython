@@ -3,6 +3,8 @@ import json
 
 
 class Tournament:
+    tournament_counter = 0
+
     def __init__(self):
         self.name = None
         self.location = None
@@ -14,6 +16,10 @@ class Tournament:
         self.rounds = [[] for _ in range(self.number_rounds)]
         self.registered_players = []
         self.save_folder = Path.cwd() / "data" / "tournament"
+
+        # Count the number of the tournaments
+        Tournament.tournament_counter += 1
+        self.tournament_id = Tournament.tournament_counter
 
     def set_name(self, name):
         self.name = name
@@ -44,13 +50,14 @@ class Tournament:
 
     def get_tournament(self):
         return {
+            "tournament_id": self.tournament_id,
             "name": self.name,
             "location": self.location,
             "date": f"{self.start_date} - {self.end_date}",
             "list_of_players": self.registered_players,
             "rounds": self.rounds,
             "current_round": self.current_round,
-            "description": self.description
+            "description": self.description,
         }
 
     def save_tournament(self):
@@ -67,7 +74,10 @@ class Tournament:
         new_tournament = self.get_tournament()
 
         # Check if player exists in JSON database
-        existing_tournament = any(new_tournament["name"] == player["name"] for player in tournament_list)
+        existing_tournament = any(
+            new_tournament["tournament_id"] == tournament["tournament_id"]
+            for tournament in tournament_list
+        )
 
         # Add new player
         if not existing_tournament:
@@ -76,8 +86,6 @@ class Tournament:
             # Save updated player list
             with open(save_file, "w") as file:
                 json.dump(tournament_list, file, ensure_ascii=False, indent=2)
-        else:
-            print(f"The tournament '{new_tournament['name']}' already existed in the database")
 
     def update_tournament(self, **kwargs):
         # Load existing JSON database
@@ -94,13 +102,13 @@ class Tournament:
 
         # Find tournament in JSON database
         for tournament in tournament_list:
-            if tournament["name"] == self.name:
+            if tournament["tournament_id"] == self.tournament_id:
                 tournament.update(self.get_tournament())
                 break
 
         # Save updated JSON database
         with open(save_file, "w") as file:
-            json.dump(tournament_list, file, indent=2)
+            json.dump(tournament_list, file, ensure_ascii=False, indent=2)
 
 
 if __name__ == "__main__":
@@ -109,4 +117,6 @@ if __name__ == "__main__":
     tournament.set_location("Paris")
     tournament.set_date("30/09/2024", "15/10/2024")
     tournament.save_tournament()
-    tournament.update_tournament(location="Paris 2024")
+    tournament.set_description("Le 1er tournois sur Paris")
+    tournament.update_tournament()
+    #tournament.update_tournament(location="JO Paris 2024")
