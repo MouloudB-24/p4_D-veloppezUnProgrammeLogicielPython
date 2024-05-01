@@ -29,12 +29,7 @@ class Match:
     def get_score(self):
         return [self.player_1.first_name, self.score_1], [self.player_2.first_name, self.score_2]
 
-    def __repr__(self):
-        return f"{self.get_score()}"
-
 
 if __name__ == "__main__":
     match = Match()
-    match.set_players("Aylan", "Mouloud")
-    match.award_points()
-    print(match)
+

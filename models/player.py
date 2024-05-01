@@ -28,7 +28,7 @@ class Player:
     def set_save_folder(self, save_folder):
         self.save_folder = save_folder
 
-    def update_points(self, score):
+    def add_point(self, score):
         self.points += score
 
     def get_player(self):
@@ -55,7 +55,6 @@ class Player:
         new_player = self.get_player()
 
         # Check if player exists in JSON database
-        new_player = self.get_player()
         registered_player = any(new_player["chess_id"] == player["chess_id"] for player in players_list)
 
         # Add new player
@@ -66,7 +65,7 @@ class Player:
             with open(save_file, "w") as file:
                 json.dump(players_list, file, indent=2)
         else:
-            print(f"The player {new_player} already existed in the database")
+            print(f"The player already existed in the database")
 
     def update_player(self, **kwargs):
         # Load existing JSON database
@@ -95,10 +94,13 @@ class Player:
 if __name__ == "__main__":
     aylan = Player()
     aylan.set_chess_id("TR76827")
-    mouloud = Player()
-    mouloud.set_chess_id("HG76007")
+    #mouloud = Player()
+    #mouloud.set_chess_id("HG76007")
     aylan.save_player()
-    mouloud.save_player()
-    mouloud.update_player(sex="Male")
+    #mouloud.save_player()
+    #mouloud.update_player(sex="Male")
+    aylan.set_name("Aylan", "BELLIL")
+    #aylan.save_player()
+    aylan.update_player()
 
 

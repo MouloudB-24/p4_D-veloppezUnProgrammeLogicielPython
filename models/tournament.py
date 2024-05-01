@@ -41,7 +41,7 @@ class Tournament:
         self.registered_players.append(player)
 
     def add_round(self, round):
-        self.rounds[self.current_round - 1].append(round)
+        self.rounds[self.current_round - 1] = round
 
     def start_next_round(self):
         if self.current_round < self.number_rounds:
@@ -120,3 +120,4 @@ if __name__ == "__main__":
     tournament.set_description("Le 1er tournois sur Paris")
     tournament.update_tournament()
     #tournament.update_tournament(location="JO Paris 2024")
+
