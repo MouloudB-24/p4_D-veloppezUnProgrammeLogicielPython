@@ -90,17 +90,16 @@ class Player:
         with open(save_file, "w") as file:
             json.dump(players_list, file, indent=2)
 
+    def __repr__(self):
+        return f"{self.first_name} {self.last_name} ({self.chess_id})"
+
 
 if __name__ == "__main__":
     aylan = Player()
     aylan.set_chess_id("TR76827")
-    #mouloud = Player()
-    #mouloud.set_chess_id("HG76007")
     aylan.save_player()
-    #mouloud.save_player()
-    #mouloud.update_player(sex="Male")
     aylan.set_name("Aylan", "BELLIL")
-    #aylan.save_player()
+    print(aylan)
     aylan.update_player()
 
 
