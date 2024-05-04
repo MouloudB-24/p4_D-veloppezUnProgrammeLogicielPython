@@ -13,7 +13,7 @@ class Tournament:
         self.description = None
         self.number_rounds = 4
         self.current_round = 1
-        self.rounds = [[] for _ in range(self.number_rounds)]
+        self.rounds = [{} for _ in range(self.number_rounds)]
         self.registered_players = []
         self.save_folder = Path.cwd() / "data" / "tournament"
 
@@ -110,10 +110,14 @@ class Tournament:
         with open(save_file, "w") as file:
             json.dump(tournament_list, file, ensure_ascii=False, indent=2)
 
+    def __repr__(self):
+        return f"{self.name} ({self.tournament_id})"
+
 
 if __name__ == "__main__":
     tournament = Tournament()
-    tournament.set_name("Tournoi d'échecs")
+    tournament.set_name("Tournoi de Paris")
+    print(tournament)
     tournament.set_location("Paris")
     tournament.set_date("30/09/2024", "15/10/2024")
     tournament.save_tournament()
