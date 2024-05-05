@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+from models.player import Player
 
 
 class Tournament:
@@ -15,7 +16,8 @@ class Tournament:
         self.current_round = 1
         self.rounds = [{} for _ in range(self.number_rounds)]
         self.registered_players = []
-        self.save_folder = Path.cwd() / "data" / "tournament"
+        self.players_pairs = []
+        self.save_folder = Path(__file__).parent.parent / "data" / "tournament"  # Corrigé
 
         # Count the number of the tournaments
         Tournament.tournament_counter += 1
@@ -110,6 +112,30 @@ class Tournament:
         with open(save_file, "w") as file:
             json.dump(tournament_list, file, ensure_ascii=False, indent=2)
 
+    def genarate_pairs(self):
+        players = self.registered_players
+        pairs = []
+
+        while len(players) > 1:
+            player_1 = players[0]
+            player_2 = None
+            for player in players[1:]:
+                if (player_1, player) not in self.players_pairs and (player, player_1) not in self.players_pairs:
+                    player_2 = player
+                    break
+
+            if player_2:
+                pair = (player_1, player_2)
+                pairs.append(pair)
+                self.players_pairs.append(pair)
+                players.remove(player_1)
+                players.remove(player_2)
+            else:
+                print(f"The player has played against all players")
+                players.pop(0)
+
+        return pairs
+
     def __repr__(self):
         return f"{self.name} ({self.tournament_id})"
 
@@ -123,5 +149,4 @@ if __name__ == "__main__":
     tournament.save_tournament()
     tournament.set_description("Le 1er tournois sur Paris")
     tournament.update_tournament()
-    #tournament.update_tournament(location="JO Paris 2024")
-
+    # tournament.update_tournament(location="JO Paris 2024")

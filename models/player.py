@@ -10,7 +10,7 @@ class Player:
         self.sex = None
         self.chess_id = None
         self.points = 0
-        self.save_folder = Path.cwd() / "data" / "tournament"
+        self.save_folder = Path(__file__).parent.parent / "data" / "tournament"  # Corrigé
 
     def set_name(self, first_name, last_name):
         self.first_name = first_name
@@ -31,7 +31,7 @@ class Player:
     def add_point(self, score):
         self.points += score
 
-    def get_player(self):
+    def get_player_json(self):  # Renommé
         return {
             "first_name": self.first_name,
             "last_name": self.last_name,
@@ -52,14 +52,12 @@ class Player:
         else:
             players_list = []
 
-        new_player = self.get_player()
-
         # Check if player exists in JSON database
-        registered_player = any(new_player["chess_id"] == player["chess_id"] for player in players_list)
+        registered_player = any(self.chess_id == player["chess_id"] for player in players_list)
 
         # Add new player
         if not registered_player:
-            players_list.append(new_player)
+            players_list.append(self.get_player_json())
 
             # Save updated player list
             with open(save_file, "w") as file:
@@ -83,7 +81,7 @@ class Player:
         # Find player in JSON database
         for player in players_list:
             if player["chess_id"] == self.chess_id:
-                player.update(self.get_player())
+                player.update(self.get_player_json())
                 break
 
         # Save updated JSON database
