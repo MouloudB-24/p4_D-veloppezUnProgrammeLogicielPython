@@ -59,7 +59,7 @@ class Tournament:
                 continue
             for j in range(i + 1, len(self.players)):
                 if self.players[j] not in used_players and self.players[j].chess_id not in self.match_history[
-                   self.players[i].chess_id]:
+                    self.players[i].chess_id]:
                     pairs.append((self.players[i], self.players[j]))
                     used_players.add(self.players[i])
                     used_players.add(self.players[j])
@@ -70,6 +70,9 @@ class Tournament:
         return pairs
 
     def generate_round(self):
+        if self.current_round_number >= self.rounds_count:
+            raise Exception("The maximum number of rounds has been reached.")
+
         round_ = Round(name=f"Round {self.current_round_number + 1}")
         pairs = self.generate_pairs()
         for player1, player2 in pairs:
@@ -144,7 +147,8 @@ if __name__ == "__main__":
         print(f"\n {round_.name}:")
         for match in round_.matches:
             if match.player2:
-                print(f"{match.player1.first_name} {match.player1.last_name} vs {match.player2.first_name} {match.player2.last_name}")
+                print(
+                    f"{match.player1.first_name} {match.player1.last_name} vs {match.player2.first_name} {match.player2.last_name}")
 
     # Afficher les points finaux des joueurs
     print("\nPoints:")
