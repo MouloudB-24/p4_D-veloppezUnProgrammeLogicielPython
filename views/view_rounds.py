@@ -1,28 +1,24 @@
-from models.round import Round
-
-
-class RoundViews:
+class RoundView:
     @staticmethod
-    def create_round():
-        print("Création d'un nouveau round")
-        name = input("Entrez le nom du round: ")
+    def display_round(round_):
+        """
+        Displays the details of a single round.
+        """
+        print(f"Round Name: {round_.name}")
+        print(f"Start Time: {round_.start_time}")
+        print(f"End Time: {round_.end_time}")
+        print("\nMatches:")
+        for match in round_.matches:
+            print(
+                f"{match.player1.first_name} {match.player1.last_name} vs {match.player2.first_name} {match.player2.last_name} - Score: {match.score1}:{match.score2}")
 
-        #  Creating a round instance
-        new_round = Round()
-        new_round.set_name(name)
-
-        # Start round
-        new_round.start_round()
-
-        # End round
-        new_round.finish_round()
-
-        # Round registration
-        new_round.save_round()
-
-        print(f"Le round {name} a été créé avec succès!")
-
-
-# Test
-if __name__ == "__main__":
-    RoundViews.create_round()
+    @staticmethod
+    def display_rounds(rounds):
+        """
+        Displays a list of rounds.
+        """
+        if not rounds:
+            print("No rounds available.")
+        else:
+            for round_ in rounds:
+                print(f"{round_.name} (Start: {round_.start_time} - End: {round_.end_time})")
