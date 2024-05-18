@@ -5,56 +5,44 @@ from models.round import Round
 from models.match import Match
 
 
-def save_players(players, filepath='data/players.json'):
-    """
-    Saves a list of Player objects to a JSON file.
-
-    :param players: List of Player objects
-    :param filepath: Path to the JSON file
-    """
-    with open(filepath, 'w') as file:
-        json.dump([player.to_dict() for player in players], file, indent=4)
-
-
-def load_players(filepath='data/players.json'):
-    """
-    Loads a list of Player objects from a JSON file.
-
-    :param filepath: Path to the JSON file
-    :return: List of Player objects
-    """
+def load_players():
     try:
-        with open(filepath, 'r') as file:
+        with open('data/players.json', 'r', encoding='utf-8') as file:
             players_data = json.load(file)
-            return [Player.from_dict(player_data) for player_data in players_data]
+            return [Player.from_dict(player) for player in players_data]
     except FileNotFoundError:
+        return []
+    except json.JSONDecodeError:
+        print("Error decoding JSON from players.json")
         return []
 
 
-def save_tournaments(tournaments, filepath='data/tournaments.json'):
-    """
-    Saves a list of Tournament objects to a JSON file.
-
-    :param tournaments: List of Tournament objects
-    :param filepath: Path to the JSON file
-    """
-    with open(filepath, 'w') as file:
-        json.dump([tournament.to_dict() for tournament in tournaments], file, indent=4)
-
-
-def load_tournaments(filepath='data/tournaments.json'):
-    """
-    Loads a list of Tournament objects from a JSON file.
-
-    :param filepath: Path to the JSON file
-    :return: List of Tournament objects
-    """
+def save_players(players):
     try:
-        with open(filepath, 'r') as file:
+        with open('data/players.json', 'w', encoding='utf-8') as file:
+            json.dump([player.to_dict() for player in players], file, indent=4, ensure_ascii=False)
+    except Exception as e:
+        print(f"Error saving players: {e}")
+
+
+def load_tournaments():
+    try:
+        with open('data/tournaments.json', 'r', encoding='utf-8') as file:
             tournaments_data = json.load(file)
-            return [Tournament.from_dict(tournament_data) for tournament_data in tournaments_data]
+            return [Tournament.from_dict(tournament) for tournament in tournaments_data]
     except FileNotFoundError:
         return []
+    except json.JSONDecodeError:
+        print("Error decoding JSON from tournaments.json")
+        return []
+
+
+def save_tournaments(tournaments):
+    try:
+        with open('data/tournaments.json', 'w', encoding='utf-8') as file:
+            json.dump([tournament.to_dict() for tournament in tournaments], file, indent=4, ensure_ascii=False)
+    except Exception as e:
+        print(f"Error saving tournaments: {e}")
 
 
 def save_round(round_, filepath):
@@ -64,7 +52,7 @@ def save_round(round_, filepath):
     :param round_: Round object
     :param filepath: Path to the JSON file
     """
-    with open(filepath, 'w') as file:
+    with open(filepath, 'w', encoding='utf-8') as file:
         json.dump(round_.to_dict(), file, indent=4)
 
 
@@ -75,7 +63,7 @@ def load_round(filepath):
     :param filepath: Path to the JSON file
     :return: Round object
     """
-    with open(filepath, 'r') as file:
+    with open(filepath, 'r', encoding='utf-8') as file:
         data = json.load(file)
         return Round.from_dict(data)
 
@@ -87,7 +75,7 @@ def save_match(match, filepath):
     :param match: Match object
     :param filepath: Path to the JSON file
     """
-    with open(filepath, 'w') as file:
+    with open(filepath, 'w', encoding='utf-8') as file:
         json.dump(match.to_dict(), file, indent=4)
 
 
@@ -98,6 +86,6 @@ def load_match(filepath):
     :param filepath: Path to the JSON file
     :return: Match object
     """
-    with open(filepath, 'r') as file:
+    with open(filepath, 'r', encoding='utf-8') as file:
         data = json.load(file)
         return Match.from_dict(data)
