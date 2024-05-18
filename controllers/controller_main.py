@@ -69,10 +69,9 @@ class MainController:
             print("1. Create Tournament")
             print("2. List Tournaments")
             print("3. Add Player to Tournament")
-            print("4. Generate Pairs for Tournament")
-            print("5. Display Tournament Details")
-            print("6. Generate Round")
-            print("7. Back to Main Menu")
+            print("4. Display Tournament Details")
+            print("5. Generate Round")
+            print("6. Back to Main Menu")
             choice = input("Enter your choice: ")
 
             if choice == '1':
@@ -82,12 +81,10 @@ class MainController:
             elif choice == '3':
                 self.add_player_to_tournament()
             elif choice == '4':
-                self.generate_pairs_for_tournament()
-            elif choice == '5':
                 self.display_tournament_details()
-            elif choice == '6':
+            elif choice == '5':
                 self.generate_round_for_tournament()
-            elif choice == '7':
+            elif choice == '6':
                 break
             else:
                 print("Invalid choice. Please try again.")
@@ -123,19 +120,6 @@ class MainController:
                 print("Player not found.")
         except Exception as e:
             print(f"Error adding player to tournament: {e}")
-
-    def generate_pairs_for_tournament(self):
-        try:
-            tournament_name = self.tournament_view.get_tournament_name()
-            pairs = self.tournament_controller.generate_pairs_for_tournament(tournament_name)
-            if pairs:
-                print("\n--- Generated Pairs ---")
-                for player1, player2 in pairs:
-                    print(f"{player1.first_name} {player1.last_name} vs {player2.first_name} {player2.last_name}")
-            else:
-                print("Tournament not found or unable to generate pairs.")
-        except Exception as e:
-            print(f"Error generating pairs: {e}")
 
     def display_tournament_details(self):
         try:
