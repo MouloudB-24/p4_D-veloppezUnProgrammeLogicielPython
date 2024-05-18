@@ -11,7 +11,7 @@ class PlayerViews:
         sex = input("Entrez le sexe du joueur: ")
         chess_id = input("Entrez l'identifiant du joueur: ")
 
-        # Creating a player instance
+        # Creating a player instance --> à deplacer dans la partie controller
         new_player = Player()
         new_player.set_first_name(first_name)
         new_player.set_last_name(last_name)
