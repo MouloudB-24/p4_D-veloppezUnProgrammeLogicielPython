@@ -139,9 +139,12 @@ class MainController:
             tournament_name = self.tournament_view.get_tournament_name()
             tournament = self.tournament_controller.find_tournament_by_name(tournament_name)
             if tournament:
-                round_ = tournament.generate_round()
-                self.round_view.display_round(round_)
-                print("Round generated successfully.")
+                try:
+                    round_ = tournament.generate_round()
+                    self.round_view.display_round(round_)
+                    print("Round generated successfully.")
+                except Exception as e:
+                    print(f"Error generating round: {e}")
             else:
                 print("Tournament not found.")
         except Exception as e:
