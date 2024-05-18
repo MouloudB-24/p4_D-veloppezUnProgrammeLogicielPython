@@ -1,9 +1,6 @@
 # Ignore the virtual environment
 env/
 
-# Ignore the data
-data/
-
 # Ignore automatically generated files and folders
 .DS_Store
 .idea/
