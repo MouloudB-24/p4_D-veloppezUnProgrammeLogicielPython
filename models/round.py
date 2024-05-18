@@ -1,66 +1,44 @@
 from datetime import datetime
-import json
-from config import SAVE_FOLDER
+from models.match import Match
 
 
 class Round:
-    def __init__(self):
-        self.name = None
-        self.start_time = None
-        self.end_time = None
+    def __init__(self, name=None, start_time=None, end_time=None):
+        self.name = name
+        self.start_time = start_time if start_time else datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.end_time = end_time
         self.matches = []
-        self.save_folder = SAVE_FOLDER
 
     def set_name(self, name):
         self.name = name
 
-    def start_round(self):
-        self.start_time = datetime.now()
+    def set_start_time(self, start_time):
+        self.start_time = start_time
+
+    def set_end_time(self, end_time):
+        self.end_time = end_time
 
     def add_match(self, match):
-        self.matches.append(match)
+        if isinstance(match, Match):
+            self.matches.append(match)
 
-    def finish_round(self):
-        self.end_time = datetime.now()
+    def generate_results(self):
+        for match in self.matches:
+            match.generate_random_result()
 
-    def get_round(self):
+    def to_dict(self):
         return {
-            "name": self.name,
-            "start_time": self.start_time.isoformat() if self.start_time else None,
-            "end_time": self.end_time.isoformat() if self.end_time else None,
-            "matches": self.matches
+            'name': self.name,
+            'start_time': self.start_time,
+            'end_time': self.end_time,
+            'matches': [match.to_dict() for match in self.matches]
         }
 
-    def save_round(self):
-        self.save_folder.mkdir(parents=True, exist_ok=True)
-        save_file = self.save_folder / "rounds.json"
+    @classmethod
+    def from_dict(cls, data):
+        round_ = cls(name=data['name'], start_time=data['start_time'], end_time=data['end_time'])
+        round_.matches = [Match.from_dict(match_data) for match_data in data['matches']]
+        return round_
 
-        # Load the existing player list if there is one
-        if save_file.exists():
-            with open(save_file, "r") as file:
-                rounds_list = json.load(file)
-        else:
-            rounds_list = []
-
-        # Check if round exists in JSON database
-        registered_round = any(self.name == round["name"] for round in rounds_list)
-
-        # Add new round
-        if not registered_round:
-            rounds_list.append(self.get_round())
-
-            # Save updated round list
-            with open(save_file, "w") as file:
-                json.dump(rounds_list, file, indent=2)
-        else:
-            print(f"The round already existed in the database")
-
-
-if __name__ == "__main__":
-    round1 = Round()
-    round1.set_name("Round 1")
-    round1.start_round()
-    round1.finish_round()
-    round1.save_round()
-
-
+    def __str__(self):
+        return f"{self.name} - Start: {self.start_time}, End: {self.end_time}, Matches: {len(self.matches)}"
