@@ -35,3 +35,11 @@ class TournamentController:
             save_tournaments(self.tournaments)
             return True
         return False
+
+    def generate_pairs_for_tournament(self, tournament_name):
+        tournament = self.find_tournament_by_name(tournament_name)
+        if tournament:
+            pairs = tournament.generate_pairs()
+            save_tournaments(self.tournaments)
+            return pairs
+        return None
