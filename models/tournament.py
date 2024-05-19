@@ -59,7 +59,7 @@ class Tournament:
                 continue
             for j in range(i + 1, len(self.players)):
                 if self.players[j] not in used_players and self.players[j].chess_id not in self.match_history[
-                    self.players[i].chess_id]:
+                   self.players[i].chess_id]:
                     pairs.append((self.players[i], self.players[j]))
                     used_players.add(self.players[i])
                     used_players.add(self.players[j])

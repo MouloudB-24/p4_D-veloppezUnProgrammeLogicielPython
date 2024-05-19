@@ -71,7 +71,8 @@ class MainController:
             print("3. Add Player to Tournament")
             print("4. Display Tournament Details")
             print("5. Generate Round")
-            print("6. Back to Main Menu")
+            print("6. Display Player Rankings")
+            print("7. Back to Main Menu")
             choice = input("Enter your choice: ")
 
             if choice == '1':
@@ -85,6 +86,8 @@ class MainController:
             elif choice == '5':
                 self.generate_round_for_tournament()
             elif choice == '6':
+                self.display_player_rankings()
+            elif choice == '7':
                 break
             else:
                 print("Invalid choice. Please try again.")
@@ -149,6 +152,18 @@ class MainController:
                 print("Tournament not found.")
         except Exception as e:
             print(f"Error generating round: {e}")
+
+    def display_player_rankings(self):
+        try:
+            tournament_name = self.tournament_view.get_tournament_name()
+            tournament = self.tournament_controller.find_tournament_by_name(tournament_name)
+            if tournament:
+                rankings = self.tournament_controller.get_player_rankings(tournament)
+                self.tournament_view.display_player_rankings(rankings)
+            else:
+                print("Tournament not found.")
+        except Exception as e:
+            print(f"Error displaying player rankings: {e}")
 
 
 if __name__ == "__main__":

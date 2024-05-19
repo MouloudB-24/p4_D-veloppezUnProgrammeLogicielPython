@@ -1,7 +1,6 @@
 class Player:
     def __init__(
-            self, last_name=None, first_name=None, birth_date=None, sex=None, chess_id=None
-    ):
+            self, last_name=None, first_name=None, birth_date=None, sex=None, chess_id=None):
         """
         Initializes a new player.
 

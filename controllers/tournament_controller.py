@@ -43,3 +43,8 @@ class TournamentController:
             save_tournaments(self.tournaments)
             return pairs
         return None
+
+    def get_player_rankings(self, tournament):
+        players = tournament.players
+        players.sort(key=lambda player: player.points, reverse=True)
+        return players

@@ -53,3 +53,8 @@ class TournamentView:
         Prompts the user for the player's chess ID.
         """
         return input("Enter player's chess ID: ")
+
+    def display_player_rankings(self, players):
+        print("\n--- Player Rankings ---")
+        for idx, player in enumerate(players, start=1):
+            print(f"{idx}. {player.first_name} {player.last_name} - Points: {player.points}")
