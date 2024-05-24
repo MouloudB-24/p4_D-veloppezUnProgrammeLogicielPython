@@ -3,6 +3,7 @@ from controllers.tournament_controller import TournamentController
 from views.view_players import PlayerView
 from views.view_tournaments import TournamentView
 from views.view_rounds import RoundView
+from utils.data_manager import save_rounds, save_matches, load_rounds, load_matches
 
 
 class MainController:
@@ -12,6 +13,8 @@ class MainController:
         self.player_view = PlayerView()
         self.tournament_view = TournamentView()
         self.round_view = RoundView()
+        self.rounds = load_rounds()
+        self.matches = load_matches()
 
     def main_menu(self):
         while True:
@@ -144,6 +147,10 @@ class MainController:
             if tournament:
                 try:
                     round_ = tournament.generate_round()
+                    self.rounds.append(round_)
+                    self.matches.extend(round_.matches)
+                    save_rounds(self.rounds)
+                    save_matches(self.matches)
                     self.round_view.display_round(round_)
                     print("Round generated successfully.")
                 except Exception as e:
