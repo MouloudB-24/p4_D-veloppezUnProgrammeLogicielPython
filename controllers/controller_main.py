@@ -53,7 +53,34 @@ class MainController:
 
     def add_player(self):
         try:
+            #  Get player details
             last_name, first_name, birth_date, sex, chess_id = self.player_view.get_player_details()
+
+            # Validate last name
+            while not self.player_controller.is_valid_name(last_name):
+                print("Invalid last name. It should not contain numbers or special characters.")
+                last_name = input("Please enter a valid last name: ")
+
+            # Validate first name
+            while not self.player_controller.is_valid_name(first_name):
+                print("Invalid first name. It should not contain numbers or special characters.")
+                first_name = input("Please enter a valid first name: ")
+
+            # Validate birthdate
+            while not self.player_controller.is_valid_birth_date(birth_date):
+                print("Invalid birth date format. It should be YYYY-MM-DD.")
+                birth_date = input("Please enter a valid birth date (YYYY-MM-DD): ")
+
+            # Validate sex
+            while not self.player_controller.is_valid_sex(sex):
+                print("Invalid sex. It should be 'M' or 'F'.")
+                sex = input("Please enter a valid sex (M/F): ")
+
+            # Validate chess ID
+            while not self.player_controller.is_valid_chess_id(chess_id):
+                print("Invalid chess ID format. It should be two letters followed by five digits.")
+                chess_id = input("Please enter a valid chess ID: ")
+
             self.player_controller.add_player(last_name, first_name, birth_date, sex, chess_id)
             print("Player added successfully.")
         except Exception as e:

@@ -30,5 +30,93 @@
         "sex": "M",
         "chess_id": "4",
         "points": 0
+    },
+    {
+        "last_name": "A",
+        "first_name": "N",
+        "birth_date": "90",
+        "sex": "M",
+        "chess_id": "oi",
+        "points": 0
+    },
+    {
+        "last_name": "O",
+        "first_name": "L",
+        "birth_date": "098",
+        "sex": "MLJ",
+        "chess_id": "IJ09890",
+        "points": 0
+    },
+    {
+        "last_name": "A",
+        "first_name": "B",
+        "birth_date": "09",
+        "sex": "H",
+        "chess_id": "UY09876",
+        "points": 0
+    },
+    {
+        "last_name": "1",
+        "first_name": "2",
+        "birth_date": "099",
+        "sex": "à00",
+        "chess_id": "OK09870",
+        "points": 0
+    },
+    {
+        "last_name": "ppo",
+        "first_name": "PPO",
+        "birth_date": "àà",
+        "sex": "M",
+        "chess_id": "OK09098",
+        "points": 0
+    },
+    {
+        "last_name": "MPO",
+        "first_name": "MMI",
+        "birth_date": "PPP",
+        "sex": "M",
+        "chess_id": "KK09098",
+        "points": 0
+    },
+    {
+        "last_name": "PI",
+        "first_name": "KK",
+        "birth_date": "09",
+        "sex": "M",
+        "chess_id": "UH09098",
+        "points": 0
+    },
+    {
+        "last_name": "BE",
+        "first_name": "Aylan",
+        "birth_date": "0098",
+        "sex": "F",
+        "chess_id": "NB09890",
+        "points": 0
+    },
+    {
+        "last_name": "BE",
+        "first_name": "Aylan",
+        "birth_date": "1999-01-12",
+        "sex": "F",
+        "chess_id": "OJ09890",
+        "points": 0
+    },
+    {
+        "last_name": "M",
+        "first_name": "M",
+        "birth_date": "2003-01-12",
+        "sex": "M",
+        "chess_id": "UH90890",
+        "points": 0
+    },
+    {
+        "last_name": "K",
+        "first_name": "K",
+        "birth_date": "2003-01-12",
+        "sex": "F",
+        "chess_id": "FR45313",
+        "points": 0
     }
 ]
