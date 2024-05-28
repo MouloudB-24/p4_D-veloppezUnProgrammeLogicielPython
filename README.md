@@ -66,7 +66,7 @@ web préféré.
 ```sh
    open flake8_rapport/index.html
    ```
-# ou sur Windows
+### ou sur Windows
 ```sh
    start flake8_rapport/index.html
    ```
