@@ -10,7 +10,10 @@ class RoundView:
         print("\nMatches:")
         for match in round_.matches:
             print(
-                f"{match.player1.first_name} {match.player1.last_name} vs {match.player2.first_name} {match.player2.last_name} - Score: {match.score1}:{match.score2}")
+                f"{match.player1.first_name} {match.player1.last_name} vs "
+                f"{match.player2.first_name} {match.player2.last_name} - "
+                f"Score: {match.score1}:{match.score2}"
+            )
 
     @staticmethod
     def display_rounds(rounds):

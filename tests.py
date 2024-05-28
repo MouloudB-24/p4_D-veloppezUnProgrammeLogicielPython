@@ -4,7 +4,7 @@ from models.player import Player
 from models.tournament import Tournament
 from models.round import Round
 from models.match import Match
-from utils.data_manager import save_players, load_players, save_tournaments, load_tournaments, save_round, load_round
+from utils.data_manager import save_players, load_players, save_tournaments, load_tournaments
 
 # Create players
 players = [
@@ -46,7 +46,7 @@ round1.generate_results()
 tournament.add_round(round1)
 
 # Save the first round to JSON file
-save_round(round1, 'data/round1.json')
+# save_round(round1, 'data/round1.json')
 
 # Create the second round and add matches
 round2 = Round("Round 2")
@@ -62,7 +62,7 @@ round2.generate_results()
 tournament.add_round(round2)
 
 # Save the second round to JSON file
-save_round(round2, 'data/round2.json')
+# save_round(round2, 'data/round2.json')
 
 # Save tournaments to JSON file
 save_tournaments([tournament], 'data/tournaments.json')

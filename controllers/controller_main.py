@@ -124,7 +124,9 @@ class MainController:
 
     def create_tournament(self):
         try:
-            name, location, start_date, end_date, rounds_count, description = self.tournament_view.get_tournament_details()
+            name, location, start_date, end_date, rounds_count, description = (
+                self.tournament_view.get_tournament_details()
+            )
             self.tournament_controller.create_tournament(name, location, start_date, end_date, rounds_count,
                                                          description)
             print("Tournament created successfully.")

@@ -74,7 +74,10 @@ class Player:
         """
         Returns a string representation of the player.
         """
-        return f"{self.last_name} {self.first_name} (ID: {self.chess_id}) - Birth Date: {self.birth_date} - Points: {self.points}"
+        return (
+            f"{self.last_name} {self.first_name} (ID: {self.chess_id}) - "
+            f"Birth Date: {self.birth_date} - Points: {self.points}"
+        )
 
 
 if __name__ == "__main__":
@@ -93,4 +96,3 @@ if __name__ == "__main__":
     # Créer une nouvelle instance à partir de player_dict
     player1_bis = Player.from_dict(player_dict)
     print(type(player1_bis))
-    print(player1_bis)

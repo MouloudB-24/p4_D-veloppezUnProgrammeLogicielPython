@@ -59,7 +59,7 @@ class Tournament:
                 continue
             for j in range(i + 1, len(self.players)):
                 if self.players[j] not in used_players and self.players[j].chess_id not in self.match_history[
-                   self.players[i].chess_id]:
+                        self.players[i].chess_id]:
                     pairs.append((self.players[i], self.players[j]))
                     used_players.add(self.players[i])
                     used_players.add(self.players[j])
@@ -115,7 +115,10 @@ class Tournament:
         return tournament
 
     def __str__(self):
-        return f"Tournament: {self.name} at {self.location} from {self.start_date} to {self.end_date}, Rounds: {self.rounds_count}, Current Round: {self.current_round_number}, Players: {len(self.players)}"
+        return (
+            f"Tournament: {self.name} at {self.location} from {self.start_date} to {self.end_date},"
+            f"Rounds: {self.rounds_count}, Current Round: {self.current_round_number}, Players: {len(self.players)}"
+        )
 
 
 if __name__ == "__main__":
@@ -148,7 +151,9 @@ if __name__ == "__main__":
         for match in round_.matches:
             if match.player2:
                 print(
-                    f"{match.player1.first_name} {match.player1.last_name} vs {match.player2.first_name} {match.player2.last_name}")
+                    f"{match.player1.first_name} {match.player1.last_name} vs "
+                    f"{match.player2.first_name} {match.player2.last_name}"
+                )
 
     # Afficher les points finaux des joueurs
     print("\nPoints:")
