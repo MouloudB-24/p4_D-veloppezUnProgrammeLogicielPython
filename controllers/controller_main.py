@@ -21,7 +21,8 @@ class MainController:
             print("\n--- Main Menu ---")
             print("1. Manage Players")
             print("2. Manage Tournaments")
-            print("3. Exit")
+            print("3. Generate Reports")
+            print("4. Exit")
             choice = input("Enter your choice: ")
 
             if choice == '1':
@@ -29,6 +30,8 @@ class MainController:
             elif choice == '2':
                 self.manage_tournaments()
             elif choice == '3':
+                self.generate_reports()
+            elif choice == '4':
                 print("Exiting...")
                 break
             else:
@@ -200,6 +203,79 @@ class MainController:
                 print("Tournament not found.")
         except Exception as e:
             print(f"Error displaying player rankings: {e}")
+
+    def generate_reports(self):
+        while True:
+            print("\n--- Generate Reports ---")
+            print("1. List all players (alphabetical order)")
+            print("2. List all tournaments")
+            print("3. Tournament details (name and dates)")
+            print("4. List players in a tournament (alphabetical order)")
+            print("5. List all rounds and matches in a tournament")
+            print("6. Back to Main Menu")
+            choice = input("Enter your choice: ")
+
+            if choice == '1':
+                self.list_all_players()
+            elif choice == '2':
+                self.list_all_tournaments()
+            elif choice == '3':
+                self.tournament_details()
+            elif choice == '4':
+                self.list_players_in_tournament()
+            elif choice == '5':
+                self.list_rounds_and_matches()
+            elif choice == '6':
+                break
+            else:
+                print("Invalid choice. Please try again.")
+
+    def list_all_players(self):
+        players = self.player_controller.list_players()
+        sorted_players = sorted(players, key=lambda player: (player.last_name, player.first_name))
+        for player in sorted_players:
+            print(player)
+
+    def list_all_tournaments(self):
+        tournaments = self.tournament_controller.list_tournaments()
+        for tournament in tournaments:
+            print(tournament)
+
+    def tournament_details(self):
+        tournament_name = self.tournament_view.get_tournament_name()
+        tournament = self.tournament_controller.find_tournament_by_name(tournament_name)
+        if tournament:
+            print(f"Name: {tournament.name}")
+            print(f"Location: {tournament.location}")
+            print(f"Start Date: {tournament.start_date}")
+            print(f"End Date: {tournament.end_date}")
+        else:
+            print("Tournament not found.")
+
+    def list_players_in_tournament(self):
+        tournament_name = self.tournament_view.get_tournament_name()
+        tournament = self.tournament_controller.find_tournament_by_name(tournament_name)
+        if tournament:
+            sorted_players = sorted(tournament.players, key=lambda player: (player.last_name, player.first_name))
+            for player in sorted_players:
+                print(player)
+        else:
+            print("Tournament not found.")
+
+    def list_rounds_and_matches(self):
+        tournament_name = self.tournament_view.get_tournament_name()
+        tournament = self.tournament_controller.find_tournament_by_name(tournament_name)
+        if tournament:
+            for round_ in tournament.rounds:
+                print(f"{round_.name} - Start: {round_.start_time}, End: {round_.end_time}")
+                for match in round_.matches:
+                    print(
+                        f"{match.player1.first_name} {match.player1.last_name} vs "
+                        f"{match.player2.first_name} {match.player2.last_name} - "
+                        f"Score: {match.score1}:{match.score2}"
+                    )
+        else:
+            print("Tournament not found.")
 
 
 if __name__ == "__main__":
