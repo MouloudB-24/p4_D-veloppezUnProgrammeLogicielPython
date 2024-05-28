@@ -20,10 +20,20 @@ class PlayerController:
             raise ValueError("Invalid sex. It should be 'M' or 'F'.")
         if not self.is_valid_birth_date(birth_date):
             raise ValueError("Invalid birth date format. It should be YYYY-MM-DD.")
+        if self.player_exists(chess_id):
+            raise ValueError(f"A player with chess ID {chess_id} already exists.")
 
         player = Player(last_name, first_name, birth_date, sex, chess_id)
         self.players.append(player)
         save_players(self.players)
+
+    def player_exists(self, chess_id):
+        """
+        Check if a player with the given chess_id already exists.
+        :param chess_id: The chess ID to check
+        :return: True if a player with the chess_id exists, False otherwise
+        """
+        return any(player.chess_id == chess_id for player in self.players)
 
     def list_players(self):
         return self.players

@@ -118,5 +118,13 @@
         "sex": "F",
         "chess_id": "FR45313",
         "points": 0
+    },
+    {
+        "last_name": "Mouloud",
+        "first_name": "BE",
+        "birth_date": "2003-07-29",
+        "sex": "M",
+        "chess_id": "KK09098",
+        "points": 0
     }
 ]
