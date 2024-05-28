@@ -38,3 +38,35 @@ d'enregistrer les résultats des matchs.
 ```sh
    python3 main.py
    ```
+
+## Vérification de la Conformité du Code avec PEP 8
+
+Pour vérifier la conformité du code avec les directives PEP 8 et générer un rapport HTML, suivez les étapes 
+ci-dessous :
+
+### Prérequis
+
+Assurez-vous d'avoir `flake8` et `flake8-html` installés. Si ce n'est pas le cas, vous pouvez les installer en utilisant
+la commande suivante :
+
+```sh
+   pip install flake8 flake8-html
+   ```
+
+### Générer le rapport
+Pour générer un rapport HTML, exécutez la commande suivante à partir de la racine du projet :
+
+```sh
+   flake8 --format=html --htmldir=flake8_rapport
+   ```
+
+### Consulter le Rapport
+Pour consulter le rapport, ouvrez le fichier index.html dans le répertoire flake8_rapport avec votre navigateur 
+web préféré.
+```sh
+   open flake8_rapport/index.html
+   ```
+# ou sur Windows
+```sh
+   start flake8_rapport/index.html
+   ```
