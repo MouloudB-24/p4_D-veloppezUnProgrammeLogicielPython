@@ -46,46 +46,6 @@ def save_tournaments(tournaments):
         print(f"Error saving tournaments: {e}")
 
 
-def load_rounds():
-    try:
-        with open(save_folder / "rounds.json", 'r', encoding='utf-8') as file:
-            rounds_data = json.load(file)
-            return [Round.from_dict(round_) for round_ in rounds_data]
-    except FileNotFoundError:
-        return []
-    except json.JSONDecodeError:
-        print("Error decoding JSON from rounds.json")
-        return []
-
-
-def save_rounds(rounds):
-    try:
-        with open(save_folder / "rounds.json", 'w', encoding='utf-8') as file:
-            json.dump([round.to_dict() for round in rounds], file, indent=4, ensure_ascii=False)
-    except Exception as e:
-        print(f"Error saving rounds: {e}")
-
-
-def load_matches():
-    try:
-        with open(save_folder / "matchs.json", 'r', encoding='utf-8') as file:
-            matches_data = json.load(file)
-            return [Match.from_dict(match) for match in matches_data]
-    except FileNotFoundError:
-        return []
-    except json.JSONDecodeError:
-        print("Error decoding JSON from matchs.json")
-        return []
-
-
-def save_matches(matches):
-    try:
-        with open(save_folder / "matchs.json", 'w', encoding='utf-8') as file:
-            json.dump([match.to_dict() for match in matches], file, indent=4, ensure_ascii=False)
-    except Exception as e:
-        print(f"Error saving matches: {e}")
-
-
 if __name__ == "__main__":
     # Créer des joueurs
     player1 = Player("Syfax", "BEL", "2003-01-01", "M", "AB12345")
@@ -95,13 +55,3 @@ if __name__ == "__main__":
 
     round_ = Round("Round 1")
     round_.add_match(match)
-
-    # Sauvegarder et charger les rounds
-    save_rounds([round_])
-    loaded_rounds = load_rounds()
-    print(loaded_rounds)
-
-    # Sauvegarder et charger les matchs
-    save_matches([match])
-    loaded_matches = load_matches()
-    print(loaded_matches)
