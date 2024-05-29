@@ -149,9 +149,16 @@ class MainController:
             chess_id = self.tournament_view.get_player_chess_id()
             player = self.player_controller.find_player_by_id(chess_id)
             if player:
-                success = self.tournament_controller.add_player_to_tournament(tournament_name, player)
-                if success:
-                    print("Player added to tournament successfully.")
+                tournament = self.tournament_controller.find_tournament_by_name(tournament_name)
+                if tournament:
+                    if any(p.chess_id == chess_id for p in tournament.players):
+                        print("Player is already added to the tournament.")
+                    else:
+                        success = self.tournament_controller.add_player_to_tournament(tournament_name, player)
+                        if success:
+                            print("Player added to tournament successfully.")
+                        else:
+                            print("Failed to add player to tournament.")
                 else:
                     print("Tournament not found.")
             else:
@@ -175,16 +182,12 @@ class MainController:
     def generate_round_for_tournament(self):
         try:
             tournament_name = self.tournament_view.get_tournament_name()
-            tournament = self.tournament_controller.find_tournament_by_name(tournament_name)
-            if tournament:
+            round_ = self.tournament_controller.generate_round_for_tournament(tournament_name)
+            if round_:
                 try:
-                    round_ = tournament.generate_round()
-                    self.rounds.append(round_)
-                    self.matches.extend(round_.matches)
-                    save_rounds(self.rounds)
-                    save_matches(self.matches)
                     self.round_view.display_round(round_)
                     print("Round generated successfully.")
+
                 except Exception as e:
                     print(f"Error generating round: {e}")
             else:
