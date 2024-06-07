@@ -1,7 +1,7 @@
 # Ignore the virtual environment
 env/
 
-# Ignoner le dossier de sauvegarde
+# Ignorer le dossier data
 data/
 
 # Ignore automatically generated files and folders
