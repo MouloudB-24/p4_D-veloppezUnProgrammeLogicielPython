@@ -127,6 +127,16 @@ class MainController:
             name, location, start_date, end_date, rounds_count, description = (
                 self.tournament_view.get_tournament_details()
             )
+            # Validate start date
+            while not self.tournament_controller.is_valid_date(start_date):
+                print("Invalid start date format. It should be YYYY-MM-DD.")
+                start_date = input("Please enter a valid start date (YYYY-MM-DD): ")
+
+            # Validate end date
+            while not self.tournament_controller.is_valid_date(end_date):
+                print("Invalid end date format. It should be YYYY-MM-DD.")
+                end_date = input("Please enter a valid end date (YYYY-MM-DD): ")
+
             self.tournament_controller.create_tournament(name, location, start_date, end_date, rounds_count,
                                                          description)
             print("Tournament created successfully.")

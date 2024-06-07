@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from models.tournament import Tournament
 from utils.data_manager import save_tournaments, load_tournaments
 
@@ -56,3 +58,10 @@ class TournamentController:
             save_tournaments(self.tournaments)
             return round_
         return None
+
+    def is_valid_date(self, date_str):
+        try:
+            datetime.strptime(date_str, "%Y-%m-%d")
+            return True
+        except ValueError:
+            return False
