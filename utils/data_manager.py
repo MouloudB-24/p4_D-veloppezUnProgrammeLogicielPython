@@ -42,7 +42,3 @@ def save_tournaments(tournaments):
             json.dump([tournament.to_dict() for tournament in tournaments], file, indent=4, ensure_ascii=False)
     except Exception as e:
         print(f"Error saving tournaments: {e}")
-
-
-if __name__ == "__main__":
-    pass
