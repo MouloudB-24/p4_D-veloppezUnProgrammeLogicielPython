@@ -3,7 +3,6 @@ from controllers.tournament_controller import TournamentController
 from views.view_players import PlayerView
 from views.view_tournaments import TournamentView
 from views.view_rounds import RoundView
-from utils.data_manager import save_rounds, save_matches, load_rounds, load_matches
 
 
 class MainController:
@@ -13,8 +12,6 @@ class MainController:
         self.player_view = PlayerView()
         self.tournament_view = TournamentView()
         self.round_view = RoundView()
-        self.rounds = load_rounds()
-        self.matches = load_matches()
 
     def main_menu(self):
         while True:
@@ -165,6 +162,9 @@ class MainController:
                 print("Player not found.")
         except Exception as e:
             print(f"Error adding player to tournament: {e}")
+
+    def get_player_by_chess_id(self, chess_id, players_dict):
+        return players_dict.get(chess_id)
 
     def display_tournament_details(self):
         try:

@@ -1,8 +1,6 @@
 import json
 from models.player import Player
 from models.tournament import Tournament
-from models.round import Round
-from models.match import Match
 from config import save_folder
 
 
@@ -47,11 +45,4 @@ def save_tournaments(tournaments):
 
 
 if __name__ == "__main__":
-    # Créer des joueurs
-    player1 = Player("Syfax", "BEL", "2003-01-01", "M", "AB12345")
-    player2 = Player("Victor", "BIZ", "2000-05-15", "F", "CD67890")
-    match = Match(player1, player2)
-    match.generate_random_result()
-
-    round_ = Round("Round 1")
-    round_.add_match(match)
+    pass

@@ -1,6 +1,5 @@
 from models.round import Round
 from models.match import Match
-from utils.data_manager import save_round, load_round
 
 
 class RoundController:
@@ -14,9 +13,3 @@ class RoundController:
 
     def generate_results_for_round(self, round_):
         round_.generate_results()
-
-    def save_round(self, round_, filepath):
-        save_round(round_, filepath)
-
-    def load_round(self, filepath):
-        return load_round(filepath)

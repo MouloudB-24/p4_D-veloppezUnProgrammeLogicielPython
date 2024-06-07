@@ -48,3 +48,11 @@ class TournamentController:
         players = tournament.players
         players.sort(key=lambda player: player.points, reverse=True)
         return players
+
+    def generate_round_for_tournament(self, tournament_name):
+        tournament = self.find_tournament_by_name(tournament_name)
+        if tournament:
+            round_ = tournament.generate_round()
+            save_tournaments(self.tournaments)
+            return round_
+        return None

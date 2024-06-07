@@ -1,6 +1,9 @@
 # Ignore the virtual environment
 env/
 
+# Ignoner le dossier de sauvegarde
+data/
+
 # Ignore automatically generated files and folders
 .DS_Store
 .idea/

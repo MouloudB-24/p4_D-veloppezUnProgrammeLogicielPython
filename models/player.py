@@ -54,7 +54,7 @@ class Player:
         }
 
     @classmethod
-    def from_dict(cls, data):  # Ajout méthode qui permet de charger les données à partir JSON
+    def from_dict(cls, data):
         """
         Creates a player from a dictionary (loaded from JSON).
 
@@ -81,18 +81,4 @@ class Player:
 
 
 if __name__ == "__main__":
-    # Créer un joueur
-    player1 = Player(last_name="Aylan", first_name="BE", birth_date="2000-01-01", sex="M", chess_id="AB12345")
-    print(player1)
-
-    # Ajouter des points
-    player1.add_points(5)
-    print(player1)
-
-    # Convertir le joueur en dict
-    player_dict = player1.to_dict()
-    print(player_dict)
-
-    # Créer une nouvelle instance à partir de player_dict
-    player1_bis = Player.from_dict(player_dict)
-    print(type(player1_bis))
+    pass

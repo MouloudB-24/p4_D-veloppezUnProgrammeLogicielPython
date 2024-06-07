@@ -43,27 +43,8 @@ class Match:
         return cls(player1, player2, data['score1'], data['score2'])
 
     def __str__(self):
-        return (
-            f"{self.player1.first_name}{self.player1.last_name} vs {self.player2.first_name}{self.player2.last_name}"
-            f"- Score: {self.score1}:{self.score2}"
-        )
+        return f"{self.player1} vs {self.player2} - Score: {self.score1}:{self.score2}"
 
 
 if __name__ == "__main__":
-    # Créer deux joueurs
-    player1 = Player(last_name="Aylan", first_name="BE", birth_date="2024-01-01", sex="M", chess_id="AB12345")
-    player2 = Player(last_name="Karim", first_name="BE", birth_date="1999-05-15", sex="M", chess_id="KB67890")
-
-    # Créer un match
-    match = Match(player1, player2)
-
-    # Générer un résultat aléatoire pour le match
-    match.generate_random_result()
-
-    # Afficher le résultat du match
-    print(match)
-
-    # Afficher les points des joueurs
-    print("\nPlayer Points:")
-    print(player1)
-    print(player2)
+    pass

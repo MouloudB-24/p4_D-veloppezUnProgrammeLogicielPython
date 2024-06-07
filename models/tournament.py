@@ -54,18 +54,30 @@ class Tournament:
         pairs = []
         used_players = set()
 
+        # Gérer le cas où le nombre de joueurs est impair
+        bye_player = None
+        if len(self.players) % 2 != 0:
+            for player in self.players:
+                if player not in used_players:
+                    bye_player = player
+                    used_players.add(player)
+                    break
+
         for i in range(len(self.players)):
             if self.players[i] in used_players:
                 continue
             for j in range(i + 1, len(self.players)):
                 if self.players[j] not in used_players and self.players[j].chess_id not in self.match_history[
-                        self.players[i].chess_id]:
+                   self.players[i].chess_id]:
                     pairs.append((self.players[i], self.players[j]))
                     used_players.add(self.players[i])
                     used_players.add(self.players[j])
                     self.match_history[self.players[i].chess_id].append(self.players[j].chess_id)
                     self.match_history[self.players[j].chess_id].append(self.players[i].chess_id)
                     break
+
+        if bye_player:
+            print(f"{bye_player.first_name} {bye_player.last_name} do not play in this round.")
 
         return pairs
 
@@ -79,6 +91,7 @@ class Tournament:
             match = Match(player1, player2)
             match.generate_random_result()
             round_.add_match(match)
+
         self.add_round(round_)
         return round_
 
@@ -122,40 +135,4 @@ class Tournament:
 
 
 if __name__ == "__main__":
-    # Créer une instance de Tournament
-    tournament = Tournament(name="Echecs France", location="Paris", start_date="2023-06-01", end_date="2023-06-10")
-
-    # Créer des instances de Player
-    player1 = Player(last_name="Aylan", first_name="BE", birth_date="2024-01-01", sex="M", chess_id="AB12345")
-    player2 = Player(last_name="Karim", first_name="BE", birth_date="1999-05-15", sex="M", chess_id="KB67890")
-    player3 = Player(last_name="Mily", first_name="BE", birth_date="2000-08-20", sex="F", chess_id="EF11223")
-    player4 = Player(last_name="Victor", first_name="BIZ", birth_date="1999-11-30", sex="M", chess_id="VB44556")
-
-    # Ajouter les joueurs au tournoi
-    tournament.add_player(player1)
-    tournament.add_player(player2)
-    tournament.add_player(player3)
-    tournament.add_player(player4)
-
-    # Afficher les joueurs du tournoi
-    for player in tournament.players:
-        print(player)
-
-    # Afficher l'historique des matchs
-    print(tournament.match_history)
-
-    # Simuler trois rounds
-    for _ in range(3):
-        round_ = tournament.generate_round()
-        print(f"\n {round_.name}:")
-        for match in round_.matches:
-            if match.player2:
-                print(
-                    f"{match.player1.first_name} {match.player1.last_name} vs "
-                    f"{match.player2.first_name} {match.player2.last_name}"
-                )
-
-    # Afficher les points finaux des joueurs
-    print("\nPoints:")
-    for player in tournament.players:
-        print(f"{player.first_name} {player.last_name} : {player.points}")
+    pass
