@@ -44,15 +44,6 @@ d'enregistrer les résultats des matchs.
 Pour vérifier la conformité du code avec les directives PEP 8 et générer un rapport HTML, suivez les étapes 
 ci-dessous :
 
-### Prérequis
-
-Assurez-vous d'avoir `flake8` et `flake8-html` installés. Si ce n'est pas le cas, vous pouvez les installer en utilisant
-la commande suivante :
-
-```sh
-   pip install flake8 flake8-html
-   ```
-
 ### Générer le rapport
 Pour générer un rapport HTML, exécutez la commande suivante à partir de la racine du projet :
 
