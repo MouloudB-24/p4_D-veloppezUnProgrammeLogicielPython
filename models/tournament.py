@@ -38,7 +38,8 @@ class Tournament:
     def add_player(self, player):
         if isinstance(player, Player):
             self.players.append(player)
-            self.match_history[player.chess_id] = []
+            if player.chess_id not in self.match_history:
+                self.match_history[player.chess_id] = []
 
     def add_round(self, round_):
         if isinstance(round_, Round):
@@ -58,6 +59,8 @@ class Tournament:
         bye_player = None
         if len(self.players) % 2 != 0:
             for player in self.players:
+                if player.chess_id not in self.match_history:
+                    self.match_history[player.chess_id] = []
                 if player not in used_players:
                     bye_player = player
                     used_players.add(player)
@@ -67,6 +70,8 @@ class Tournament:
             if self.players[i] in used_players:
                 continue
             for j in range(i + 1, len(self.players)):
+                if self.players[j].chess_id not in self.match_history:
+                    self.match_history[self.players[j].chess_id] = []
                 if self.players[j] not in used_players and self.players[j].chess_id not in self.match_history[
                    self.players[i].chess_id]:
                     pairs.append((self.players[i], self.players[j]))
@@ -106,6 +111,7 @@ class Tournament:
             "rounds": [round_.to_dict() for round_ in self.rounds],
             "players": [player.to_dict() for player in self.players],
             "description": self.description,
+            "match_history": self.match_history,
         }
 
     @classmethod
@@ -125,6 +131,7 @@ class Tournament:
         tournament.players = [
             Player.from_dict(player_data) for player_data in data["players"]
         ]
+        tournament.match_history = data.get("match_history", {})
         return tournament
 
     def __str__(self):
