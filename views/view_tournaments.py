@@ -25,7 +25,7 @@ class TournamentView:
         else:
             for tournament in tournaments:
                 print(
-                    f"{tournament.name} - {tournament.location} (From{tournament.start_date} to {tournament.end_date})"
+                    f"{tournament.name} - {tournament.location} (From {tournament.start_date} to {tournament.end_date})"
                 )
 
     @staticmethod
